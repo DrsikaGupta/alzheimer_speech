@@ -1,0 +1,219 @@
+# Configuration for Alzheimer's Speech Detection Project
+
+# Dataset Configuration
+dataset:
+  name: "ADReSS"  # Options: ADReSS, ADReSSo, DementiaBank, Custom
+  data_path: "data/raw"
+  processed_path: "data/processed"
+  subject_id_column: "subject_id"
+  label_column: "label"  # 0: Control, 1: AD/MCI
+  audio_column: "audio_path"
+  transcript_column: "transcript_path"
+  
+# Subject-Level Split Configuration
+split:
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+  stratify: true
+  random_state: 42
+  subject_level: true  # Critical: ensures no data leakage
+  
+# Audio Preprocessing
+audio:
+  sample_rate: 16000
+  duration_max: 30  # seconds
+  silence_trim: true
+  noise_reduction: false
+  resample: true
+  normalize: true
+  
+# Acoustic Feature Extraction
+acoustic_features:
+  mfcc:
+    enabled: true
+    n_mfcc: 13
+    n_fft: 512
+    hop_length: 256
+  spectrogram:
+    enabled: true
+    n_fft: 512
+    hop_length: 256
+  chroma:
+    enabled: true
+  spectral_contrast:
+    enabled: true
+  tonnetz:
+    enabled: true
+  zero_crossing_rate:
+    enabled: true
+  tempo:
+    enabled: true
+  pitch:
+    enabled: true
+  jitter_shimmer:
+    enabled: true
+  pause_features:
+    enabled: true
+    
+# Text Preprocessing
+text:
+  lowercase: true
+  remove_punctuation: true
+  remove_numbers: true
+  lemmatize: true
+  remove_stopwords: false  # Keep stopwords for some analyses
+  min_length: 10  # minimum characters
+  
+# Linguistic Feature Extraction
+linguistic_features:
+  lexical:
+    enabled: true
+    ttr: true  # Type-Token Ratio
+    mtld: true  # Measure of Textual Lexical Diversity
+    vocd: false  # Requires special setup
+  syntactic:
+    enabled: true
+    pos_tags: true
+    dependency_parse: true
+    sentence_complexity: true
+  semantic:
+    enabled: true
+    word_frequency: true
+    concreteness: false  # Requires external lexicon
+  discourse:
+    enabled: true
+    coherence: false  # Advanced, may require custom implementation
+    repetitions: true
+    filler_words: true
+    
+# Pretrained Embeddings
+embeddings:
+  audio:
+    wav2vec2:
+      enabled: true
+      model_name: "facebook/wav2vec2-base-960h"
+      pooling: "mean"
+    hubert:
+      enabled: true
+      model_name: "facebook/hubert-base-ls960"
+      pooling: "mean"
+    whisper:
+      enabled: false  # Optional, larger model
+      model_name: "openai/whisper-small"
+  text:
+    bert:
+      enabled: true
+      model_name: "bert-base-uncased"
+      pooling: "cls"
+    sentence_transformer:
+      enabled: true
+      model_name: "all-MiniLM-L6-v2"
+      
+# Model Configuration
+models:
+  baseline:
+    logistic_regression:
+      enabled: true
+      C: 1.0
+      max_iter: 1000
+    random_forest:
+      enabled: true
+      n_estimators: 100
+      max_depth: null
+    svm:
+      enabled: true
+      kernel: "rbf"
+      C: 1.0
+    xgboost:
+      enabled: true
+      n_estimators: 100
+      max_depth: 6
+    mlp:
+      enabled: true
+      hidden_layers: [128, 64, 32]
+      dropout: 0.3
+      
+  advanced:
+    audio_cnn:
+      enabled: true
+      architecture: "resnet18"
+      pretrained: true
+    text_lstm:
+      enabled: true
+      embedding_dim: 300
+      hidden_dim: 256
+      num_layers: 2
+    multimodal_fusion:
+      enabled: true
+      fusion_type: "attention"  # Options: early, late, attention
+      audio_weight: 0.5
+      text_weight: 0.5
+      
+# Training Configuration
+training:
+  batch_size: 32
+  epochs: 50
+  learning_rate: 0.001
+  weight_decay: 0.01
+  optimizer: "adamw"
+  scheduler: "cosine"
+  early_stopping:
+    enabled: true
+    patience: 10
+    min_delta: 0.001
+  class_weights: true  # Handle imbalanced datasets
+  
+# Evaluation Metrics
+evaluation:
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1
+    - roc_auc
+    - pr_auc
+    - sensitivity
+    - specificity
+    - confusion_matrix
+    - calibration
+  cross_validation:
+    enabled: true
+    folds: 5
+    stratified: true
+  ablation_study:
+    enabled: true
+    
+# Explainability
+explainability:
+  shap:
+    enabled: true
+    samples: 100
+  lime:
+    enabled: true
+    samples: 100
+  permutation_importance:
+    enabled: true
+  attention_visualization:
+    enabled: true
+    
+# Experiment Tracking
+tracking:
+  mlflow:
+    enabled: true
+    experiment_name: "alzheimers_speech_detection"
+    tracking_uri: "mlruns"
+  tensorboard:
+    enabled: true
+    log_dir: "experiments/logs"
+    
+# Output Paths
+paths:
+  models: "experiments/models"
+  results: "experiments/results"
+  logs: "experiments/logs"
+  figures: "experiments/figures"
+  
+# Reproducibility
+random_seed: 42
+deterministic: true

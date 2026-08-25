@@ -1,0 +1,77 @@
+# Core Dependencies
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+scipy>=1.11.0
+
+# Audio Processing
+librosa>=0.10.0
+soundfile>=0.12.0
+pydub>=0.25.0
+torch>=2.0.0
+torchaudio>=2.0.0
+
+# Transformers & Pretrained Models
+transformers>=4.30.0
+sentence-transformers>=2.2.0
+
+# Text Processing
+nltk>=3.8.0
+spacy>=3.6.0
+textblob>=0.17.0
+
+# Deep Learning
+tensorflow>=2.13.0  # Optional, for certain models
+keras>=2.13.0
+
+# Ensemble Methods
+xgboost>=1.7.0
+lightgbm>=4.0.0
+
+# Explainability
+shap>=0.42.0
+lime>=0.2.0
+eli5>=0.11.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.15.0
+
+# Web Framework
+streamlit>=1.25.0
+gradio>=3.40.0
+fastapi>=0.100.0
+uvicorn>=0.23.0
+python-multipart>=0.0.6
+
+# API & Deployment
+requests>=2.31.0
+httpx>=0.24.0
+pydantic>=2.0.0
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# Experiment Tracking
+mlflow>=2.5.0
+tensorboard>=2.13.0
+
+# Utilities
+tqdm>=4.65.0
+pyyaml>=6.0
+joblib>=1.3.0
+pickle5>=0.0.11
+
+# Data Handling
+openpyxl>=3.1.0
+
+# Fairness & Ethics
+aif360>=0.5.0
+
+# Development
+black>=23.0.0
+flake8>=6.1.0
+isort>=5.12.0
+mypy>=1.5.0
